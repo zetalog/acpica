@@ -202,6 +202,11 @@
 #define USE_NATIVE_ALLOCATE_ZEROED
 #endif
 
+/* AcpiHelp configuration. */
+#ifdef ACPI_HELP_APP
+#define USE_NATIVE_ALLOCATE_ZEROED
+#endif
+
 /* AcpiNames/Example configuration. Hardware disabled */
 
 #if (defined ACPI_EXAMPLE_APP)  || \
@@ -417,6 +422,8 @@
 
 /* We will be linking to the standard Clib functions */
 
+#define ACPI_STRTOK(a,b)        strtok((a),(b))
+#define ACPI_STRPBRK(s1,s2)     strpbrk((s1),(s2))
 #define ACPI_STRSTR(s1,s2)      strstr((s1), (s2))
 #define ACPI_STRCHR(s1,c)       strchr((s1), (c))
 #define ACPI_STRLEN(s)          (ACPI_SIZE) strlen((s))
@@ -476,6 +483,8 @@ typedef char *va_list;
 
 /* Use the local (ACPICA) definitions of the clib functions */
 
+#define ACPI_STRPBRK(s1,s2)     AcpiUtStrpbrk((s1),(s2))
+#define ACPI_STRTOK(s,t)        AcpiUtStrtok((s),(t))
 #define ACPI_STRSTR(s1,s2)      AcpiUtStrstr ((s1), (s2))
 #define ACPI_STRCHR(s1,c)       AcpiUtStrchr ((s1), (c))
 #define ACPI_STRLEN(s)          (ACPI_SIZE) AcpiUtStrlen ((s))

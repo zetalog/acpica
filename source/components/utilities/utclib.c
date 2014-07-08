@@ -269,6 +269,91 @@ AcpiUtStrlen (
 
 /*******************************************************************************
  *
+ * FUNCTION:    AcpiUtStrpbrk (strpbrk)
+ *
+ * PARAMETERS:  SrcString       - Target of the copy
+ *              TarString       - The delimiters to scan
+ *
+ * RETURN:      Pointer to First occurance of TarString in SrcString
+ *
+ * DESCRIPTION: Find common part of the two strings
+ *
+ ******************************************************************************/
+
+char*
+AcpiUtStrpbrk(
+    const char              *SrcString,
+    const char              *TarString)
+{
+    const char              *sc1;
+    const char              *sc2;
+
+    for (sc1 = SrcString; *sc1 != '\0'; ++sc1)
+    {
+        for (sc2 = TarString; *sc2 != '\0'; ++sc2)
+        {
+            if (*sc1 == *sc2)
+            {
+                return ((char*)sc1);
+            }
+        }
+    }
+    return (NULL);
+}
+
+
+/*******************************************************************************
+ *
+ * FUNCTION:    AcpiUtStrtok (strtok)
+ *
+ * PARAMETERS:  s               - Target of the copy
+ *              delim           - The delimiters to scan
+ *
+ * RETURN:      Pointer to String after the first delim
+ *
+ * DESCRIPTION: Split string into tokens
+ *
+ ******************************************************************************/
+
+char*
+AcpiUtStrtok (
+    char                    *s,
+    const char              *delim)
+{
+    char                    *sbegin;
+    static char             *end;
+
+    if ((sbegin = s) == NULL)
+    {
+        sbegin = end;
+        if (sbegin == NULL)
+        {
+            return (NULL);
+        }
+    }
+
+    end = AcpiUtStrpbrk(sbegin,delim);
+    while (end == sbegin)
+    {
+        *sbegin++ = '\0';
+        end = AcpiUtStrpbrk(sbegin,delim);
+    }
+    if (end)
+    {
+        *end = '\0';
+        end++;
+    }
+    else
+    {
+        end = NULL;
+        return (end);
+    }
+    return (sbegin);
+}
+
+
+/*******************************************************************************
+ *
  * FUNCTION:    AcpiUtStrcpy (strcpy)
  *
  * PARAMETERS:  DstString       - Target of the copy

@@ -329,6 +329,16 @@ AcpiUtStrchr (
     int                     ch);
 
 char *
+AcpiUtStrpbrk (
+    const char              *SrcString,
+    const char              *TarString);
+
+char *
+AcpiUtStrtok (
+    char                    *s,
+    const char              *delim);
+
+char *
 AcpiUtStrcpy (
     char                    *DstString,
     const char              *SrcString);
